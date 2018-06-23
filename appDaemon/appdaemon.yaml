@@ -1,0 +1,12 @@
+log:
+  logfile: /home/homeassistant/.homeassistant/appDaemon/daemon.log
+  errorfile: /home/homeassistant/.homeassistant/appDaemon/error.log
+  diagfile: /home/homeassistant/.homeassistant/appDaemon/diag.log
+appdaemon:
+  threads: 10
+  plugins:
+    HASS:
+      type: hass
+      ha_url: http://192.168.1.4:8123
+      ha_key: !secret ha_key
+  production_mode: False

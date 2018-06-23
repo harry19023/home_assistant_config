@@ -1,0 +1,16 @@
+.config_entries.json
+entity_registry.yaml
+harmony_harmony_hub.conf
+home-assistant.log
+home-assistant_v2.db
+phue.conf
+secrets.yaml
+.uuid
+.cloud/
+dasher/config/config.json
+!/dasher/config/config.json.no_password
+*.swp
+secrets.py
+appDaemon/apps/__pychache__
+appDaemon/daemon.log
+appDaemon/error.log

@@ -1,0 +1,45 @@
+globals:
+  module: globals
+  class: Globals
+
+switch_reset:
+  module: switch_reset
+  class: SwitchReset
+  file: /home/homeassistant/.homeassistant/confDaemon/apps/switches.db
+  delay: '10'
+
+default_lights:
+  module: default_lights
+  class: DefaultLights
+  dependencies: globals
+
+goodnight:
+  module: goodnight
+  class: Goodnight
+  dependencies: globals
+
+good_morning:
+  module: good_morning
+  class: GoodMorning
+  dependencies: 
+    - globals
+    - default_lights
+
+home_away:
+  module: home_away
+  class: HomeAway
+
+computer_control:
+  module: computer_control
+  class: ComputerControl
+  dependencies: globals
+
+roombalina:
+  module: roombalina
+  class: Roombalina
+  dependencies: globals
+
+harmony:
+  module: harmony
+  class: Harmony
+  dependencies: globals

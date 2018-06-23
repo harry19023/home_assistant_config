@@ -1,0 +1,12 @@
+- alias: 'Test Telegram Message'
+  trigger:
+    platform: state
+    entity_id: input_boolean.bedroom_light_adjusted
+    from: 'off'
+    to: 'on'
+  action:
+    service: telegram_bot.send_message
+    data:
+      message: "This is a test"
+      title: "Title!"
+      inline_keyboard: [[["Text btn1", "/button1"], ["Text btn2", "/button2"]], [["Text btn3", "/button3"]]]

@@ -1,0 +1,88 @@
+homeassistant:
+  name: Bungalow
+  latitude: 37.800617
+  longitude: -122.421918
+  elevation: 0
+  unit_system: imperial
+  time_zone: America/Los_Angeles
+  customize: !include customize.yaml
+
+# Enables the frontend
+frontend:
+
+# Enables configuration UI
+config:
+
+http:
+  api_password: !secret http_password
+  # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+  # base_url: example.duckdns.org:8123
+
+# Checks for available updates
+updater:
+  include_used_components: true
+
+# Enables support for tracking state changes over time
+history:
+
+#enables detailed logging
+logger:
+
+# Text to speech
+tts:
+  - platform: google
+
+# Cloud
+cloud:
+
+#allows python scripts to be used
+python_script:
+
+#entities
+hue:
+  bridges:
+    - host: !secret hue_IP
+      allow_unreachable: true
+      allow_hue_groups: true
+
+wemo:
+  static:
+    - !secret wemo_IP
+
+#telegram text bot
+telegram_bot:
+  - platform: polling
+    api_key: !secret telegram_api_key
+    allowed_chat_ids:
+      - !secret telegram_chat_ID
+
+#harmony
+remote:
+  - platform: harmony
+    name: Harmony Hub
+    host: !secret harmony_IP
+
+ecovacs:
+  username: !secret ecovacs_username
+  password: !secret ecovacs_password
+
+wake_on_lan:
+
+input_boolean:
+  home:
+    name: Is anyone home?
+    initial: on
+  cleaning_needed:
+    name: Does roombalina need to run?
+    initial: off
+  alarm_on:
+    initial: off
+
+input_datetime:
+  wake_up_time:
+    name: Morning Alarm Time
+    has_date: false
+    has_time: true
+    initial: '07:30:00'
+
+automation: !include automations.yaml
