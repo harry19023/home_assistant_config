@@ -9,7 +9,7 @@ secrets.yaml
 .cloud/
 *.swp
 secrets.py
-appDaemon/apps/__pychache__/
+appDaemon/apps/__pycache__/
 appDaemon/daemon.log*
 appDaemon/error.log
 *.save
