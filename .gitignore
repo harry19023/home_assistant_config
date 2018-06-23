@@ -7,10 +7,9 @@ phue.conf
 secrets.yaml
 .uuid
 .cloud/
-dasher/config/config.json
-!/dasher/config/config.json.no_password
 *.swp
 secrets.py
-appDaemon/apps/__pychache__
-appDaemon/daemon.log
+appDaemon/apps/__pychache__/*
+appDaemon/daemon.log*
 appDaemon/error.log
+*.save
