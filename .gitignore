@@ -13,3 +13,4 @@ appDaemon/apps/__pychache__/*
 appDaemon/daemon.log*
 appDaemon/error.log
 *.save
+appDaemon/diag.log
