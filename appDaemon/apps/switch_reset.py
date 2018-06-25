@@ -8,7 +8,7 @@ import time
 # Args:
 #
 #delay - amount of time after restart to set the switches
-# 
+#
 #
 # Release Notes
 #
@@ -37,7 +37,7 @@ class SwitchReset(hass.Hass):
     self.run_in(self.set_switches, self.args["delay"])
 
   def state_change(self, entity, attribute, old, new, kwargs):
-    #self.log_notify("State change: {} to {}".format(entity, new))
+    self.log_notify("State change: {} to {}".format(entity, new))
     self.device_db[entity] = new
   
   def set_switches(self, kwargs):
@@ -59,3 +59,7 @@ class SwitchReset(hass.Hass):
   
   def log_notify(self, message, level = "INFO"):
     self.log(message)
+
+  def terminate(self):
+    self.device_db.close()
+    self.log_notify('Saved switches to disk')

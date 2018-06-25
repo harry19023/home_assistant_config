@@ -5,7 +5,7 @@ globals:
 switch_reset:
   module: switch_reset
   class: SwitchReset
-  file: /home/homeassistant/.homeassistant/confDaemon/apps/switches.db
+  file: /home/homeassistant/.homeassistant/appDaemon/apps/switches.db
   delay: '10'
 
 default_lights:
@@ -42,4 +42,10 @@ roombalina:
 harmony:
   module: harmony
   class: Harmony
-  dependencies: globals
+  dependencies: 
+    - globals
+    - computer_control
+
+system_monitor:
+  module: system_monitor
+  class: SystemMonitor

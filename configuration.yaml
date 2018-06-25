@@ -23,7 +23,7 @@ updater:
   include_used_components: true
 
 # Enables support for tracking state changes over time
-history:
+#history:
 
 #enables detailed logging
 logger:
@@ -37,6 +37,13 @@ cloud:
 
 #allows python scripts to be used
 python_script:
+
+discovery:
+  ignore:
+    - belkin_wemo
+    - harmony
+    - netgear_router
+    - philips_hue
 
 #entities
 hue:
@@ -84,5 +91,12 @@ input_datetime:
     has_date: false
     has_time: true
     initial: '07:30:00'
+
+sensor: 
+  - platform: systemmonitor
+    resources:
+      - type: memory_use_percent
+      - type: processor_use
+      - type: since_last_boot
 
 automation: !include automations.yaml

@@ -33,20 +33,14 @@ class ComputerControl(hass.Hass):
   def initialize(self):
     self.globals = self.get_app('globals')
 
-    self.listen_state(self.computer_on, 'remote.harmony_hub', attribute='current_activity', new='Computer')
-    self.listen_state(self.computer_off, 'remote.harmony_hub', attribute='current_activity', old='Computer')
-
     self.log('Successfully initialized computer control!' , level='INFO')
 
 
-  def computer_on(self, entity, attribute, old, new, kwargs):
+  def computer_on(self):
     self.call_service('wake_on_lan/send_magic_packet', mac=secrets.LivingRoom_MAC, broadcast_address=secrets.LivingRoom_IP)
+    self.log('turned computer on', level='INFO')
 
-
-
-    self.log('computer_on called entity=' + entity + ' attribute=' + attribute + ' old=' + old + ' new=' + new, level='INFO')
-
-  def computer_off(self, entity, attribute, old, new, kwargs):
+  def computer_off(self):
     connection =ssh(secrets.LivingRoom_IP ,"LivingRoom", secrets.LivingRoom_password)
     connection.sendCommand("shutdown /h")
-    self.log('computer_off called old=' + old + ' new=' + new, level='INFO')
+    self.log('turned computer off', level='INFO')
