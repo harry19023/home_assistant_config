@@ -14,3 +14,4 @@ appDaemon/daemon.log*
 appDaemon/error.log
 *.save
 appDaemon/diag.log
+tts/
