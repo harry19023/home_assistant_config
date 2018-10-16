@@ -25,10 +25,6 @@ good_morning:
     - globals
     - default_lights
 
-home_away:
-  module: home_away
-  class: HomeAway
-
 computer_control:
   module: computer_control
   class: ComputerControl

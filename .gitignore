@@ -15,3 +15,4 @@ appDaemon/error.log
 *.save
 appDaemon/diag.log
 tts/
+.storage/

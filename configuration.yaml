@@ -99,4 +99,10 @@ sensor:
       - type: processor_use
       - type: since_last_boot
 
+xiaomi_aqara:
+  discovery_retry: 5
+  gateways:
+    - key: 2kw8u5vb94q31d2j
+      host: 192.168.1.11
+
 automation: !include automations.yaml

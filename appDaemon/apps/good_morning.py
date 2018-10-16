@@ -5,7 +5,7 @@ class GoodMorning(hass.Hass):
   def initialize(self):
     self.globals = self.get_app("globals")
     self.default_lights = self.get_app("default_lights")
-    self.alarm_handle = self.run_daily(self.wake_up, self.parse_time(self.get_state('input_datetime.wake_up_time')))
+    self.alarm_handle = self.run_daily(self.wake_up, self.parse_time(self.get_state('input_datetime.wake_up_time') + ' - 00:20:00'))
     self.listen_state(self.alarm_changed, 'input_datetime.wake_up_time')
 
     self.log("Initialized Good Morning successfully!", level = "INFO")
