@@ -16,3 +16,4 @@ appDaemon/error.log
 appDaemon/diag.log
 tts/
 .storage/
+appDaemon/apps/switches.db.db
