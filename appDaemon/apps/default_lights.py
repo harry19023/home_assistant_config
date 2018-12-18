@@ -28,8 +28,12 @@ class DefaultLights(hass.Hass):
       self.turn_on(entity, rgb_color=self.globals.concentrateRGB, brightness=self.globals.concentrateBrightness, transition=1)
       self.log("Turned " + entity + " to concentrate", level="INFO")
     else:
-      self.turn_on(entity, rgb_color=self.globals.relaxRGB, brightness=self.globals.relaxBrightness, transition=1) 
-      self.log("Turned " + entity + " to relax", level="INFO")
+      if entity == 'light.bathroom':
+        self.turn_on(entity, rgb_color=self.globals.relaxRGB, brightness=40, transition=1)
+        self.log("Turned " + entity + " to relax", level="INFO")
+      else:
+        self.turn_on(entity, rgb_color=self.globals.relaxRGB, brightness=self.globals.relaxBrightness, transition=1)
+        self.log("Turned " + entity + " to relax", level="INFO")
 
   def transition(self, kwargs):
     transition = kwargs['transition']

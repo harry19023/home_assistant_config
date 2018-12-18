@@ -40,7 +40,6 @@ python_script:
 
 discovery:
   ignore:
-    - belkin_wemo
     - harmony
     - netgear_router
     - philips_hue
@@ -55,11 +54,11 @@ hue:
 wemo:
 
 #telegram text bot
-telegram_bot:
-  - platform: polling
-    api_key: !secret telegram_api_key
-    allowed_chat_ids:
-      - !secret telegram_chat_ID
+#telegram_bot:
+#  - platform: polling
+#    api_key: !secret telegram_api_key
+#    allowed_chat_ids:
+#      - !secret telegram_chat_ID
 
 #harmony
 remote:
@@ -90,17 +89,84 @@ input_datetime:
     has_time: true
     initial: '07:30:00'
 
-sensor: 
-  - platform: systemmonitor
-    resources:
-      - type: memory_use_percent
-      - type: processor_use
-      - type: since_last_boot
-
 xiaomi_aqara:
   discovery_retry: 5
   gateways:
     - key: 2kw8u5vb94q31d2j
       host: 192.168.1.11
+
+device_tracker:
+  - platform: netgear
+    password: !secret netgear_password
+    host: 192.168.1.1
+    interval_seconds: 10
+    consider_home: 180
+    track_new_devices: yes
+  - platform: google_maps
+    username: !secret google_location_username
+    password: !secret google_location_password
+    max_gps_accuracy: 75
+
+zone:
+  - name: Home
+    latitude: 37.800667
+    longitude: -122.4219
+    radius: 50
+
+group:
+  default_view:
+    view: true
+    icon: mdi:home
+    entities:
+      - group.harry
+      - group.sage
+      - group.all_switches
+      - input_datetime.wake_up_time
+      - input_boolean.alarm_on
+      - input_boolean.cleaning_needed
+      - input_boolean.home
+      - sensor.humidity_bathroom
+      - sensor.humidity_bedroom
+      - sensor.temperature_bathroom
+      - sensor.temperature_bedroom
+  harry:
+    view: false
+    name: Harry Home Tracker
+    entities:
+      - device_tracker.harry_phone_wifi
+      - device_tracker.harry_phone_bt_bedroom
+      - device_tracker.harry_phone_bt_kitchen
+      - device_tracker.harry_phone_bt_bathroom
+  sage:
+    view: false
+    name: Sage Home Tracker
+    entities:
+      - device_tracker.sage_phone_wifi
+      - device_tracker.sage_phone_bt_bedroom
+      - device_tracker.sage_phone_bt_kitchen
+      - device_tracker.sage_phone_bt_bathroom
+  media:
+    view: true
+    name: Media Players
+    entities:
+      - group.tvs
+      - group.audio
+      - remote.harmony_hub
+  tvs:
+    view: false
+    name: TV's
+    entities:
+      - media_player.bedroom_tv
+      - media_player.living_room_tv
+  audio:
+    view: false
+    name: Audio Players
+    entities:
+      - media_player.bathroom_speaker
+      - media_player.bedroom_speaker
+      - media_player.kitchen_speaker
+      - media_player.surround
+      - media_player.whole_house
+
 
 automation: !include automations.yaml

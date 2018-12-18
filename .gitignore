@@ -17,3 +17,5 @@ appDaemon/diag.log
 tts/
 .storage/
 appDaemon/apps/switches.db.db
+.google_maps_location_sharing.cookies
+known_devices.yaml

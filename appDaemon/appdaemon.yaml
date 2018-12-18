@@ -8,5 +8,5 @@ appdaemon:
     HASS:
       type: hass
       ha_url: !secret ha_url
-      ha_key: !secret ha_key
+      token: !secret ha_token
   production_mode: False

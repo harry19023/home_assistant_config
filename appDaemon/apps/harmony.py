@@ -40,12 +40,21 @@ class Harmony(hass.Hass):
 
   def stream_off(self, entity, attribute, old, new, kwargs):
     device, ent = self.split_entity(entity)
-    #self.log('Chromecast_audio_off called with ' + ent + ' new=' + new + ' old=' + old)
+    self.log('stream_off called with ' + ent + ' new=' + new + ' old=' + old)
     if ent in self.stream_devices:
       current_activity = self.get_state('remote.harmony_hub', attribute='current_activity')
       if current_activity == self.ent_to_activity[ent]:
-        self.call_service('remote/turn_off', entity_id='remote.harmony_hub')
-        self.log("Turned off the stereo")
+        self.log('checking if ' + entity +' is off in 5 seconds')
+        self.run_in(self.stream_still_off, 10, entity_id=entity)
+        self.log('left stream_off function')
+
+  def stream_still_off(self, kwargs):
+    if self.get_state(kwargs['entity_id']) == 'off':
+      self.log(kwargs['entity_id'] + ' is  still off, turning off')
+      self.call_service('remote/turn_off', entity_id='remote.harmony_hub')
+      self.log("Turned off the stereo")
+    else:
+      self.log(kwargs['entity_id'] + 'is still on, leaving on')
 
   def harmony_change(self, entity, attribute, old, new, kwargs):
     self.log('Harmony_change called with old=' + old + ' new=' + new)
@@ -53,7 +62,7 @@ class Harmony(hass.Hass):
       self.computer_control.computer_on()
       self.log('called computer_control.computer_on()', level='INFO')
     if new in self.activity_to_volume:
-      self.call_service('remote/send_command', entity_id='remote.harmony_hub', device='53047637', command='VolumeDown', num_repeats=60, delay_secs=self.min_delay)
+      self.call_service('remote/send_command', entity_id='remote.harmony_hub', device='53047637', command='VolumeDown', num_repeats=50, delay_secs=self.min_delay)
       self.call_service('remote/send_command', entity_id='remote.harmony_hub', device='53047637', command='VolumeUp', num_repeats=self.activity_to_volume[new], delay_secs=self.min_delay)
       self.log('Set ' + new + ' volume to ' + str(self.activity_to_volume[new]))
     if old == 'Computer':

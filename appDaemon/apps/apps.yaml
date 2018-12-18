@@ -42,6 +42,34 @@ harmony:
     - globals
     - computer_control
 
-system_monitor:
-  module: system_monitor
-  class: SystemMonitor
+bathroom:
+  module: bathroom
+  class: Bathroom
+  dependencies:
+    -  globals
+
+bathroom_motion_light:
+  module: motion_light
+  class: MotionLight
+  sensor: binary_sensor.motion_sensor_bathroom
+  light: light.bathroom
+  dependencies: globals
+
+living_room_motion_light:
+  module: motion_light
+  class: MotionLight
+  sensor: binary_sensor.motion_sensor_living_room
+  light: light.living_room
+  dependencies: globals
+
+front_door_motion_lights:
+  module: motion_light
+  class: MotionLight
+  sensor: binary_sensor.motion_sensor_front_door
+  light: light.front_door
+  dependencies: globals
+
+bedroom:
+  module: bedroom
+  class: Bedroom
+  dependencies: globals
