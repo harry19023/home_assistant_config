@@ -16,7 +16,12 @@ class Bathroom(hass.Hass):
     #listeners
     self.listen_state(self.lights_off, 'binary_sensor.motion_sensor_bathroom', new='off')
     self.listen_state(self.shower_dehumidify_listener, 'sensor.humidity_bathroom')
+    self.listen_state(self.home_off, 'input_boolean.home', new='on')
+
     self.log('Successfully initialized Bathroom!' , level='INFO')
+
+  def home_off(self, entity, attribute, old, new, kwargs):
+    self.turn_off('switch.dehumidifier')
 
   def lights_off(self, entity, attribute, old, new, kwargs):
     door = self.get_state('binary_sensor.door_window_bathroom_door')
