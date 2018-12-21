@@ -52,6 +52,11 @@ hue:
       allow_hue_groups: true
 
 wemo:
+  discovery: false
+  static:
+    - 192.168.1.8
+    - 192.168.1.32
+    - 192.168.1.36
 
 #telegram text bot
 #telegram_bot:
@@ -80,6 +85,9 @@ input_boolean:
     name: Does roombalina need to run?
     initial: off
   alarm_on:
+    initial: off
+  in_bed:
+    name: Is anyone in bed?
     initial: off
 
 input_datetime:
@@ -125,6 +133,7 @@ group:
       - input_boolean.alarm_on
       - input_boolean.cleaning_needed
       - input_boolean.home
+      - input_boolean.in_bed
       - sensor.humidity_bathroom
       - sensor.humidity_bedroom
       - sensor.temperature_bathroom
@@ -133,18 +142,12 @@ group:
     view: false
     name: Harry Home Tracker
     entities:
-      - device_tracker.harry_phone_wifi
-      - device_tracker.harry_phone_bt_bedroom
-      - device_tracker.harry_phone_bt_kitchen
-      - device_tracker.harry_phone_bt_bathroom
+      - device_tracker.harry_phone
   sage:
     view: false
     name: Sage Home Tracker
     entities:
-      - device_tracker.sage_phone_wifi
-      - device_tracker.sage_phone_bt_bedroom
-      - device_tracker.sage_phone_bt_kitchen
-      - device_tracker.sage_phone_bt_bathroom
+      - device_tracker.sage_phone
   media:
     view: true
     name: Media Players

@@ -13,11 +13,6 @@ default_lights:
   class: DefaultLights
   dependencies: globals
 
-goodnight:
-  module: goodnight
-  class: Goodnight
-  dependencies: globals
-
 good_morning:
   module: good_morning
   class: GoodMorning
@@ -67,6 +62,13 @@ front_door_motion_lights:
   class: MotionLight
   sensor: binary_sensor.motion_sensor_front_door
   light: light.front_door
+  dependencies: globals
+
+bedroom_motion_light:
+  module: motion_light
+  class: MotionLight
+  sensor: binary_sensor.motion_sensor_bedroom
+  light: light.bedroom
   dependencies: globals
 
 bedroom:

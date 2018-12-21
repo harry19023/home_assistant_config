@@ -11,6 +11,8 @@ class Globals(hass.Hass):
     self.concentrateBrightness = 254
     self.relaxRGB = [255,195,55]
     self.relaxBrightness = 200
+    self.nightlightRGB = [255,160,39]
+    self.nightlightBrightness = 1
     self.lights = ["light.bedroom", "light.living_room", "light.bathroom", "light.front_door"]
     self.wake_up_time = "08:00:00"
     self.wake_up_time_hour_early = '07:00:00'
