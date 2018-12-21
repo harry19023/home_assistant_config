@@ -14,11 +14,7 @@ class DefaultLights(hass.Hass):
     self.log("Initialized DefaultLights successfully", level = "INFO")
 
   def home_away(self, entity, attribute, old, new, kwargs):
-    if new == 'on':
-      for light in self.globals.lights:
-        self.turn_on(light)
-      self.log('Turned all the lights on', level='INFO')
-    else:
+    if new == 'off':
       for light in self.globals.lights:
         self.turn_off(light)
       self.log('Turned all the lights off', level='INFO')

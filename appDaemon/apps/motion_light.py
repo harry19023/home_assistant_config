@@ -18,16 +18,20 @@ class MotionLight(hass.Hass):
   def lights_on(self, entity, attribute, old, new, kwargs):
     fan = self.get_state('input_boolean.in_bed')
     status = self.get_state(self.light)
-    if status == 'off':
-      if fan == 'on':
-        if self.light == 'light.bedroom':
-          self.log('Bedroom motion detected, but fan on so lights stay off', level='INFO')
-          return
-        self.turn_on(self.light, rgb_color=self.globals.nightlightRGB, brightness=self.globals.nightlightBrightness, transition=1)
-        self.log('Turned on ' + self.light + ' dim because fas was on and motion was detected', level='INFO')
-      else:
-        self.turn_on(self.light)
-      # self.log('Turned on ' + self.light + ' because motion was detected', level='INFO')
+    home = self.get_state('input_boolean.home')
+    if home == 'on':
+      if status == 'off':
+        if fan == 'on':
+          if self.light == 'light.bedroom':
+            self.log('Bedroom motion detected, but fan on so lights stay off', level='INFO')
+            return
+          self.turn_on(self.light, rgb_color=self.globals.nightlightRGB, brightness=self.globals.nightlightBrightness, transition=1)
+          self.log('Turned on ' + self.light + ' dim because fas was on and motion was detected', level='INFO')
+        else:
+          self.turn_on(self.light)
+        # self.log('Turned on ' + self.light + ' because motion was detected', level='INFO')
+    else:
+      self.log('Detected motion but noone is home')
 
   def lights_off(self, entity, attribute, old, new, kwargs):
     self.turn_off(self.light)

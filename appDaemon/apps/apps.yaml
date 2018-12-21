@@ -75,3 +75,8 @@ bedroom:
   module: bedroom
   class: Bedroom
   dependencies: globals
+
+home_away:
+  module: home_away
+  class: HomeAway
+  dependencies: globals
