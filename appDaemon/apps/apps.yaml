@@ -13,6 +13,10 @@ default_lights:
   class: DefaultLights
   dependencies: globals
 
+sound:
+  module: sound
+  class: Sound
+
 good_morning:
   module: good_morning
   class: GoodMorning
@@ -79,4 +83,6 @@ bedroom:
 home_away:
   module: home_away
   class: HomeAway
-  dependencies: globals
+  dependencies:
+    - globals
+    - sound

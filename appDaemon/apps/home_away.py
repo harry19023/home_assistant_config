@@ -5,7 +5,7 @@ class HomeAway(hass.Hass):
 
   def initialize(self):
     self.globals = self.get_app('globals')
-
+    self.sound = self.get_app('sound')
     #listeners
     self.door_listener_handle = self.listen_state(self.front_door_open, 'binary_sensor.door_window_front_door', new='on')
     self.listen_event(self.leave_button, 'xiaomi_aqara.click')
@@ -18,7 +18,7 @@ class HomeAway(hass.Hass):
       self.turn_on('input_boolean.home')
       self.log('Turned house to home mode')
       self.turn_on('light.front_door')
-      self.announce_message('Welcome home')
+      self.sound.tts('Welcome home', 0.7, 5, 'media_player.bathroom_speaker')
 
   def leave_button(self, event_name, data, kwargs):
     button = data['entity_id']
@@ -29,7 +29,7 @@ class HomeAway(hass.Hass):
         self.turn_off('input_boolean.home')
         self.log('Turned house to away mode')
         self.run_in(self.turn_on_door_listener, 60)
-        self.announce_message('Turning off the house')
+        self.sound.tts('Turning off the house', 0.7, 6, 'media_player.bathroom_speaker')
 
   def turn_on_door_listener(self, kwargs):
     self.log('Listening for door again')
