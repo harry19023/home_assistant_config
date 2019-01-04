@@ -5,8 +5,8 @@ class Bedroom(hass.Hass):
 
   def initialize(self):
     self.globals = self.get_app('globals')
-    self.night_temp = 65
-    self.day_temp = 68
+    self.night_temp = 62
+    self.day_temp = 66
     self.run_in(self.fan_heater_init, 15)
 
     #listeners

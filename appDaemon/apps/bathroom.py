@@ -8,7 +8,7 @@ class Bathroom(hass.Hass):
     self.humidity_shower = 65
     self.humidity_post_shower = 51
     self.dehum_min_on = 0
-    self.dehum_min_max = 45
+    self.dehum_min_max = 30
     self.humidity_away = 55
 
     self.turn_off('switch.dehumidifier')
