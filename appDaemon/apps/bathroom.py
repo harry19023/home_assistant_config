@@ -43,9 +43,9 @@ class Bathroom(hass.Hass):
         self.run_in(self.turn_off_dehumidifier, 60)
     else:
       if (float(humidity) > self.humidity_away) and (humidifier_status == 'off'):
-        self.log('Away humidity too high, turning on dehumidifier (humidity: ' + humidity)
-        self.turn_on('switch.dehumidifier')
-        self.run_in(self.turn_off_dehumidifier, 60)
+        self.log('Away humidity too high, (vaca: not) turning on dehumidifier (humidity: ' + humidity)
+       # self.turn_on('switch.dehumidifier')
+       # self.run_in(self.turn_off_dehumidifier, 60)
 
   def turn_off_dehumidifier(self, kwargs):
     self.dehum_min_on += 1
