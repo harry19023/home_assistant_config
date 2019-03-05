@@ -29,5 +29,6 @@ class GoodMorning(hass.Hass):
 
   def update_alarm(self, kwargs):
     self.alarm_handle = self.run_daily(self.wake_up, self.parse_time(self.globals.wake_up_time_20_min_early))
+    self.log('Reset wake up time to ' + new_time)
     self.turn_on('input_boolean.alarm_on')
 

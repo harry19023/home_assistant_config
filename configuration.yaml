@@ -75,6 +75,14 @@ ecovacs:
   username: !secret ecovacs_username
   password: !secret ecovacs_password
 
+nest:
+  client_id: !secret nest_client_ID
+  client_secret: !secret nest_client_secret
+  structure:
+    - Bungalow
+
+system_health:
+
 wake_on_lan:
 
 input_boolean:
@@ -99,24 +107,25 @@ input_datetime:
     has_date: false
     has_time: true
     initial: '08:00:00'
+  bed_time:
+    name: Bed Cooldown Time
+    has_date: false
+    has_time: true
+    initial: '21:00:00'
 
 xiaomi_aqara:
   discovery_retry: 5
   gateways:
-    - key: 2kw8u5vb94q31d2j
-      host: 192.168.1.11
+    - key: !secret xiaomi_aqara_key
+      host: !secret xiaomi_aqara_IP
 
 device_tracker:
   - platform: netgear
     password: !secret netgear_password
-    host: 192.168.1.1
+    host: !secret netgear_IP
     interval_seconds: 10
     consider_home: 180
     track_new_devices: yes
-  - platform: google_maps
-    username: !secret google_location_username
-    password: !secret google_location_password
-    max_gps_accuracy: 75
 
 zone:
   - name: Home
@@ -133,10 +142,12 @@ group:
       - group.sage
       - group.all_switches
       - input_datetime.wake_up_time
+      - input_datetime.bed_time
       - input_boolean.alarm_on
       - input_boolean.cleaning_needed
       - input_boolean.home
       - input_boolean.in_bed
+      - input_boolean.living_room_motion
       - sensor.humidity_bathroom
       - sensor.humidity_bedroom
       - sensor.temperature_bathroom

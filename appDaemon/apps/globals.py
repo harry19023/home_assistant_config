@@ -14,9 +14,9 @@ class Globals(hass.Hass):
     self.nightlightRGB = [255,160,39]
     self.nightlightBrightness = 1
     self.lights = ["light.bedroom", "light.living_room", "light.bathroom", "light.front_door"]
-    self.wake_up_time = "08:00:00"
-    self.wake_up_time_hour_early = '07:00:00'
-    self.wake_up_time_20_min_early = '16:49:00'
+    self.wake_up_time = "07:30:00"
+    self.wake_up_time_hour_early = '06:30:00'
+    self.wake_up_time_20_min_early = '07:10:00'
     self.log("Successfully initialized Globals!", level = "INFO")
 
     self.listen_state(self.wake_up_change,  entity='input_datetime.wake_up_time')

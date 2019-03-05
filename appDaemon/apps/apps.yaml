@@ -86,3 +86,10 @@ home_away:
   dependencies:
     - globals
     - sound
+
+nest:
+  module: nest
+  class: Nest
+  dependencies:
+    - globals
+    - sound
