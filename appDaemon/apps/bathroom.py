@@ -9,18 +9,18 @@ class Bathroom(hass.Hass):
     self.humidity_post_shower = 51
     self.dehum_min_on = 0
     self.dehum_min_max = 30
-    self.humidity_away = 55
+    self.humidity_away = 45
 
     self.turn_off('switch.dehumidifier')
 
     #listeners
     self.listen_state(self.lights_off, 'binary_sensor.motion_sensor_bathroom', new='off')
     self.listen_state(self.shower_dehumidify_listener, 'sensor.humidity_bathroom')
-    self.listen_state(self.home_off, 'input_boolean.home', new='on')
+    self.listen_state(self.home_on, 'input_boolean.home', new='on')
 
     self.log('Successfully initialized Bathroom!' , level='INFO')
 
-  def home_off(self, entity, attribute, old, new, kwargs):
+  def home_on(self, entity, attribute, old, new, kwargs):
     self.turn_off('switch.dehumidifier')
 
   def lights_off(self, entity, attribute, old, new, kwargs):
@@ -42,10 +42,10 @@ class Bathroom(hass.Hass):
         self.turn_on('switch.dehumidifier')
         self.run_in(self.turn_off_dehumidifier, 60)
     else:
-      if (float(humidity) > self.humidity_away) and (humidifier_status == 'off'):
-        self.log('Away humidity too high, (vaca: not) turning on dehumidifier (humidity: ' + humidity)
-       # self.turn_on('switch.dehumidifier')
-       # self.run_in(self.turn_off_dehumidifier, 60)
+      if (float(humidity) > self.humidity_away): # and (humidifier_status == 'off'): no time limit when away
+        self.log('Away humidity too high, turning on dehumidifier (humidity: ' + humidity)
+        self.turn_on('switch.dehumidifier')
+        # self.run_in(self.turn_off_dehumidifier, 60) no time limit when away
 
   def turn_off_dehumidifier(self, kwargs):
     self.dehum_min_on += 1
