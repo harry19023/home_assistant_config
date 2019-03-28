@@ -5,7 +5,7 @@ class Bedroom(hass.Hass):
 
   def initialize(self):
     self.globals = self.get_app('globals')
-    self.night_temp = 62
+    self.night_temp = 63
     self.day_temp = 67
     self.run_in(self.heater_control, 5)
 

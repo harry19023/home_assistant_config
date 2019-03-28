@@ -76,6 +76,7 @@ class Sound(hass.Hass):
             self.call_service("tts/google_say", entity_id = data["player"], message = data["text"])
           if data["type"] == "play":
             netpath = netpath = 'http://{}:{}/local/{}/{}'.format(self.args["ip"], self.args["port"], self.args["base"], data["path"])
+            self.log('netpath: ' + netpath)
             self.call_service("media_player/play_media", entity_id = data["player"], media_content_id = netpath, media_content_type = data["content"])
 
           # Sleep to allow message to complete before restoring volume
@@ -99,6 +100,7 @@ class Sound(hass.Hass):
     self.event.set()
 
   def tts(self, text, volume, length, player):
+    self.log('here')
     self.queue.put({"type": "tts", "text": text, "volume": volume, "length": length, "player": player})
 
   def play(self, path, content, volume, length, player):

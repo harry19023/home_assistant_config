@@ -11,7 +11,7 @@ class Bathroom(hass.Hass):
     self.dehum_min_max = 30
     self.humidity_away = 45
 
-    self.turn_off('switch.dehumidifier')
+    self.run_in(self.init_humidity_check, 5)
 
     #listeners
     self.listen_state(self.lights_off, 'binary_sensor.motion_sensor_bathroom', new='off')
@@ -20,8 +20,20 @@ class Bathroom(hass.Hass):
 
     self.log('Successfully initialized Bathroom!' , level='INFO')
 
+
+  def init_humidity_check(self, kwargs):
+    humidity = self.get_state('sensor.humidity_bathroom')
+    humid_status = self.get_state('switch.dehumidifier')
+    home = self.get_state('input_boolean.home')
+    if (humid_status == 'on') and (home == 'on'):
+      self.run_in(self.turn_off_dehumidifier, 1)
+    else:
+      self.dehumidifier_control()
+
+
   def home_on(self, entity, attribute, old, new, kwargs):
     self.turn_off('switch.dehumidifier')
+
 
   def lights_off(self, entity, attribute, old, new, kwargs):
     door = self.get_state('binary_sensor.door_window_bathroom_door')
@@ -32,7 +44,12 @@ class Bathroom(hass.Hass):
     else:
       self.log('Didn\'t off bathroom lights, door is closed or shower is detected. humidity is ' + humidity)
 
+
   def shower_dehumidify_listener(self, entity, attribute, old, new, kwargs):
+    self.dehumidifier_control()
+
+
+  def dehumidifier_control(self):
     humidity = self.get_state('sensor.humidity_bathroom')
     humidifier_status = self.get_state('switch.dehumidifier')
     home = self.get_state('input_boolean.home')
@@ -46,6 +63,10 @@ class Bathroom(hass.Hass):
         self.log('Away humidity too high, turning on dehumidifier (humidity: ' + humidity)
         self.turn_on('switch.dehumidifier')
         # self.run_in(self.turn_off_dehumidifier, 60) no time limit when away
+      else:
+        self.turn_off('switch.dehumidifier')
+        self.log('Away humidity low, turning off dehumidifier (humidity: ' + humidity)
+
 
   def turn_off_dehumidifier(self, kwargs):
     self.dehum_min_on += 1
@@ -59,7 +80,7 @@ class Bathroom(hass.Hass):
       self.log('Dehumidifier has been on for ' + str(self.dehum_min_max) + ' minutes, turning off')
       self.log('Humidity was ' + humidity + ' when turned off')
       self.turn_off('switch.dehumidifier')
-      self.run_in(self.reset_dehum_timer, 60*30)
+      self.run_in(self.reset_dehum_timer, 60*10)
     else:
       if self.dehum_min_on % 5 == 0:
         self.log('Still running, humidity:' + humidity +', min_on:' + str(self.dehum_min_on))

@@ -57,7 +57,7 @@ class Harmony(hass.Hass):
       self.log(kwargs['entity_id'] + 'is still on, leaving on')
 
   def harmony_change(self, entity, attribute, old, new, kwargs):
-    self.log('Harmony_change called with old=' + old + ' new=' + new)
+    self.log('Harmony_change called with old=' + str(old) + ' new=' + str(new))
     if new == 'Computer':
       self.computer_control.computer_on()
       self.log('called computer_control.computer_on()', level='INFO')

@@ -74,6 +74,9 @@ remote:
 ecovacs:
   username: !secret ecovacs_username
   password: !secret ecovacs_password
+  country: us
+  continent: na
+
 
 nest:
   client_id: !secret nest_client_ID
@@ -181,7 +184,7 @@ group:
     entities:
       - media_player.bathroom_speaker
       - media_player.bedroom_speaker
-      - media_player.kitchen_speaker
+      - media_player.livingroom_speaker
       - media_player.surround
       - media_player.whole_house
 
