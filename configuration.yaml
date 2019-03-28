@@ -33,16 +33,17 @@ tts:
   - platform: google
 
 # Cloud
-cloud:
+#cloud:
 
 #allows python scripts to be used
-python_script:
+#python_script:
 
 discovery:
   ignore:
     - harmony
     - netgear_router
     - philips_hue
+    - igd
 
 #entities
 hue:

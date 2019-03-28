@@ -95,6 +95,4 @@ home_away:
 nest:
   module: nest
   class: Nest
-  dependencies:
-    - globals
-    - sound
+  dependencies: globals
