@@ -23,7 +23,7 @@ class DefaultLights(hass.Hass):
     fan = self.get_state('input_boolean.in_bed')
     if fan == 'on':
       self.turn_on(entity, rgb_color=self.globals.nightlightRGB, brightness=self.globals.nightlightBrightness, transition=1)
-      self.log('Turned ' + entity + 'on dim because fan was on')
+      # self.log('Turned ' + entity + 'on dim because fan was on')
       return
     if self.now_is_between(self.globals.defaultDimToBrightTime, self.globals.defaultBrightToDimTime):
       self.turn_on(entity, rgb_color=self.globals.concentrateRGB, brightness=self.globals.concentrateBrightness, transition=1)

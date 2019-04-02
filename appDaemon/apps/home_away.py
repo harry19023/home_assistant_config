@@ -28,9 +28,9 @@ class HomeAway(hass.Hass):
     for message in self.message_queue:
       self.log(message)
       if message[0] == 'tts':
-        self.sound.tts(message[1], 0.3, message[2], 'media_player.livingroom_speaker')
+        self.sound.tts(message[1], 0.7, message[2], 'media_player.bathroom_speaker')
       else:
-        self.sound.play(message[1], message[2], 0.3, message[3], 'media_player.livingroom_speaker')
+        self.sound.play(message[1], message[2], 0.7, message[3], 'media_player.bathroom_speaker')
     self.message_queue = []
 
 
@@ -61,9 +61,9 @@ class HomeAway(hass.Hass):
           message = 'Welcome home'
         else:
           message = 'Turning off the house'
-        self.sound.tts(message, 0.7, 5, 'media_player.livingroom_speaker')
+        self.sound.tts(message, 0.7, 5, 'media_player.bathroom_speaker')
       else:
-        self.sound.play(os.path.join(status + '/',song_list[song_choice]), 'audio/mp3', 0.7, 5, 'media_player.livingroom_speaker')
+        self.sound.play(os.path.join(status + '/',song_list[song_choice]), 'audio/mp3', 0.7, 5, 'media_player.bathroom_speaker')
     else:
       self.log('called play_song with bad status: ' + str(status))
 

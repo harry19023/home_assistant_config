@@ -37,7 +37,7 @@ class SwitchReset(hass.Hass):
     self.run_in(self.set_switches, self.args["delay"])
 
   def state_change(self, entity, attribute, old, new, kwargs):
-    self.log_notify("State change: {} to {}".format(entity, new))
+    # self.log_notify("State change: {} to {}".format(entity, new))
     self.device_db[entity] = new
   
   def set_switches(self, kwargs):

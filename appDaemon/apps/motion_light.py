@@ -23,15 +23,15 @@ class MotionLight(hass.Hass):
     if home == 'on':
       if status == 'off':
         if self.light == 'light.living_room' and living_room_motion == 'off':
-          self.log('Living Room not turned on due to override', level='INFO')
+          # self.log('Living Room not turned on due to override', level='INFO')
           return
         if fan == 'on':
           if self.light == 'light.bedroom':
-            self.log('Bedroom motion detected, but fan on so lights stay off', level='INFO')
+            # self.log('Bedroom motion detected, but fan on so lights stay off', level='INFO')
             return
           else:
             self.turn_on(self.light, rgb_color=self.globals.nightlightRGB, brightness=self.globals.nightlightBrightness, transition=1)
-            self.log('Turned on ' + self.light + ' dim because fas was on and motion was detected', level='INFO')
+            # self.log('Turned on ' + self.light + ' dim because fas was on and motion was detected', level='INFO')
         else:
           self.turn_on(self.light)
         # self.log('Turned on ' + self.light + ' because motion was detected', level='INFO')
