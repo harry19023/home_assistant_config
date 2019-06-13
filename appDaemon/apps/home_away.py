@@ -54,7 +54,7 @@ class HomeAway(hass.Hass):
     if status in ['home', 'away']:
       path = path + status
       song_list = [name for name in os.listdir(path) if os.path.isfile(os.path.join(path, name))]
-      song_choice = random.randint(0, len(song_list))
+      song_choice = random.randint(0, len(song_list)) -1
       if song_choice == len(song_list):
         message = ''
         if status == 'home':

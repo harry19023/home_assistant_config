@@ -78,7 +78,7 @@ class Bedroom(hass.Hass):
 
 
   def get_new_bed_time(self, kwargs):
-    self.bed_time_handle = self.run_daily(self.wake_up_sleep, self.parse_time(self.get_state('input_datetime.bed_time')), temp=self.night_temp)
+    self.bed_time_handle = self.run_daily(self.heater_control, self.parse_time(self.get_state('input_datetime.bed_time')), temp=self.night_temp)
     self.log('Reset night heater time to ' + self.get_state('input_datetime.bed_time'))
 
 

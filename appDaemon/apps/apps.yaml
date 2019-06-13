@@ -32,12 +32,12 @@ computer_control:
   class: ComputerControl
   dependencies: globals
 
-roombalina:
-  module: roombalina
-  class: Roombalina
-  dependencies: 
-    - globals
-    - home_away
+#roombalina:
+#  module: roombalina
+#  class: Roombalina
+#  dependencies: 
+#    - globals
+#    - home_away
 
 harmony:
   module: harmony

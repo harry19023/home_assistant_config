@@ -9,7 +9,7 @@ class Bathroom(hass.Hass):
     self.humidity_post_shower = 51
     self.dehum_min_on = 0
     self.dehum_min_max = 30
-    self.humidity_away = 48
+    self.humidity_away = 50
 
     self.run_in(self.init_humidity_check, 5)
 
@@ -28,9 +28,10 @@ class Bathroom(hass.Hass):
     home = self.get_state('input_boolean.home')
     if home == 'on':
       if humid_status == 'on':
-        self.humidity_post_shower = float(self.get_state('sensor.humidity_bedroom'))
+        self.humidity_post_shower = float(self.get_state('sensor.humidity_bedroom')) - 3
         self.run_in(self.shower_timer, 1)
       else:
+        self.log('Nothing happening')
         self.set_lasts()
     else:
       if bed_humidity > self.humidity_away:
@@ -47,16 +48,16 @@ class Bathroom(hass.Hass):
       # if humidity jumps more than 5 in one reading, its a shower
       if float(humidity) > float(self.last_humidity) + 5:
         self.log('Shower detected, last humidity: ' + self.last_humidity)
-        self.humidity_post_shower = float(self.get_state('sensor.humidity_bedroom'))
+        self.humidity_post_shower = float(self.get_state('sensor.humidity_bedroom')) - 3
         self.turn_on('switch.dehumidifier')
         self.set_lasts()
         self.run_in(self.shower_timer, 60)
       elif float(humidity) > float(self.last_humidity):
         # if humidity jumps twice in 3 minutes, its a shower
-        if (self.datetime() - self.last_time).total_seconds() / 60 < 3:
+        if (self.datetime() - self.last_time).total_seconds() / 60 <= 1:
           self.turn_on('switch.dehumidifier')
-          self.log('Shower detected, last humidity was less than 5 minutes ago: ' + self.last_humidity)
-          self.humidity_post_shower = float(self.get_state('sensor.humidity_bedroom'))
+          self.log('Shower detected, last humidity was less than 1 minute1 ago: ' + self.last_humidity)
+          self.humidity_post_shower = float(self.get_state('sensor.humidity_bedroom')) - 3
           self.run_in(self.shower_timer, 60)
           self.set_lasts()
         else:
@@ -83,35 +84,37 @@ class Bathroom(hass.Hass):
 
 
   def away_dehumidifier(self, kwargs):
-    humidity = self.get_state('sensor.humidity_bedroom')
-    if (float(humidity) > self.humidity_away):
-      self.log('Away humidity too high, turning on dehumidifier (humidity: ' + humidity)
-      self.turn_on('switch.dehumidifier')
-      self.run_in(self.away_dehumidifier, 60*15)
-    else:
-      self.turn_off('switch.dehumidifier')
-      self.log('Away humidity low, turning off dehumidifier (humidity: ' + humidity)
-
+    if self.get_state('input_boolean.home') == 'off':
+      humidity = self.get_state('sensor.humidity_bedroom')
+      if (float(humidity) > self.humidity_away):
+        self.log('Away humidity too high, turning on dehumidifier (humidity: ' + humidity)
+        self.turn_on('switch.dehumidifier')
+        self.run_in(self.away_dehumidifier, 60*15)
+      else:
+        self.turn_off('switch.dehumidifier')
+        self.log('Away humidity low, turning off dehumidifier (humidity: ' + humidity)
+        self.run_in(self.away_dehumidifier, 60*60)
 
   def shower_timer(self, kwargs):
+    self.log('Here')
     self.dehum_min_on += 1
     humidity = self.get_state('sensor.humidity_bathroom')
     home = self.get_state('input_boolean.home')
     if home == 'on':
-      if float(humidity) < self.humidity_post_shower:
-        self.turn_off('switch.dehumidifier')
-        self.log('Turned off dehumidifier, humidity at ' + humidity)
-        self.dehum_min_on = 0
-        self.set_lasts()
-      elif self.dehum_min_on > self.dehum_min_max:
+      if self.dehum_min_on > self.dehum_min_max:
         self.log('Dehumidifier has been on for ' + str(self.dehum_min_max) + ' minutes, turning off')
         self.log('Humidity was ' + humidity + ' when turned off')
         self.turn_off('switch.dehumidifier')
         self.dehum_min_on = 0
         self.set_lasts()
+      elif float(humidity) < self.humidity_post_shower:
+        self.run_in(self.shower_timer, 60*5)
+        self.log('At goal, running for 5 more minutes. Humidity at ' + humidity)
+        self.dehum_min_on += self.dehum_min_max
+        self.set_lasts()
       else:
         if self.dehum_min_on % 5 == 0:
-          self.log('Still running, humidity:' + humidity +', min_on:' + str(self.dehum_min_on))
+          self.log('Still running, humidity:' + humidity + ', min_on:' + str(self.dehum_min_on) + ' goal: ' + str(self.humidity_post_shower))
         self.run_in(self.shower_timer, 60)
     else:
       self.log('shower timer canceled because no one is home anymore')
