@@ -11,7 +11,7 @@ secrets.yaml
 secrets.py
 appDaemon/apps/__pycache__/
 appDaemon/daemon.log*
-appDaemon/error.log
+appDaemon/error*
 *.save
 appDaemon/diag.log
 tts/
@@ -19,3 +19,4 @@ tts/
 appDaemon/apps/switches.db.db
 .google_maps_location_sharing.cookies
 known_devices.yaml
+.HA_VERSION
