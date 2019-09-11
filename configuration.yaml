@@ -65,18 +65,18 @@ remote:
     name: Harmony Hub
     host: !secret harmony_IP
 
-#ecovacs:
-#  username: !secret ecovacs_username
-#  password: !secret ecovacs_password
-#  country: us
-#  continent: na
-
-
 nest:
   client_id: !secret nest_client_ID
   client_secret: !secret nest_client_secret
   structure:
     - Bungalow
+
+vacuum:
+  - platform: roomba
+    host: !secret roomba_IP
+    username: !secret roomba_BLID
+    password: !secret roomba_password
+
 
 system_health:
 

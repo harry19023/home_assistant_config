@@ -47,7 +47,7 @@ class Harmony(hass.Hass):
         current_activity = self.get_state('remote.harmony_hub', attribute='current_activity')
         if current_activity == self.ent_to_activity[ent]:
           self.log('checking if ' + entity +' is off in 5 seconds')
-          self.run_in(self.stream_still_off, 10, entity_id=entity)
+          self.run_in(self.stream_still_off, 30, entity_id=entity)
           self.log('left stream_off function')
 
   def stream_still_off(self, kwargs):
@@ -65,8 +65,8 @@ class Harmony(hass.Hass):
         self.computer_control.computer_on()
         self.log('called computer_control.computer_on()', level='INFO')
       if new in self.activity_to_volume:
-        self.call_service('remote/send_command', entity_id='remote.harmony_hub', device='53047637', command='VolumeDown', num_repeats=50, delay_secs=self.min_delay)
-        self.call_service('remote/send_command', entity_id='remote.harmony_hub', device='53047637', command='VolumeUp', num_repeats=self.activity_to_volume[new], delay_secs=self.min_delay)
+        # self.call_service('remote/send_command', entity_id='remote.harmony_hub', device='53047637', command='VolumeDown', num_repeats=50, delay_secs=self.min_delay)
+        # self.call_service('remote/send_command', entity_id='remote.harmony_hub', device='53047637', command='VolumeUp', num_repeats=self.activity_to_volume[new], delay_secs=self.min_delay)
         self.log('Set ' + new + ' volume to ' + str(self.activity_to_volume[new]))
       if old == 'Computer' and new is not None:
         self.computer_control.computer_off() 

@@ -1,3 +1,0 @@
-#!/bin/sh
-
-sudo node node_modules/node-dash-button/bin/findbutton
